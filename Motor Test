@@ -1,0 +1,63 @@
+#define A_1L	5
+#define A_1H	2
+#define A_2H	6
+#define A_2L	7
+#define B_1L	13
+#define B_1H	12
+#define B_2H	14
+#define B_2L	15
+#define A_sleep	8
+#define B_sleep	17
+#define A_WHEEL	3
+#define B_WHEEL	4
+#define microC	18
+
+unsigned int count;
+
+void setup() {
+  initPins();
+  digitalWrite (A_2H, HIGH);
+  digitalWrite (A_1H, HIGH);
+  count = 0;
+}
+
+void loop() {
+  digitalWrite (GREEN_LED, HIGH);
+  delay (1000);
+  digitalWrite (GREEN_LED, LOW);
+  delay (1000);
+  if (count > 2) {
+    digitalWrite (microC, HIGH);
+  }
+  count++;
+}
+
+void initPins() {
+  pinMode(microC, OUTPUT);
+  digitalWrite(microC, LOW);
+
+  pinMode(A_sleep, OUTPUT);
+  pinMode(B_sleep, OUTPUT);
+  digitalWrite(A_sleep, LOW);
+  digitalWrite(B_sleep, LOW);
+
+  pinMode(A_1L, OUTPUT);
+  pinMode(A_1H, OUTPUT);
+  pinMode(A_2H, OUTPUT);
+  pinMode(A_2L, OUTPUT);
+  pinMode(B_1L, OUTPUT);
+  pinMode(B_1H, OUTPUT);
+  pinMode(B_2H, OUTPUT);
+  pinMode(B_2L, OUTPUT);
+  digitalWrite(A_1L, LOW);
+  digitalWrite(A_1H, LOW);
+  digitalWrite(A_2L, LOW);
+  digitalWrite(A_2H, LOW);
+  digitalWrite(B_1L, LOW);
+  digitalWrite(B_1H, LOW);
+  digitalWrite(B_2L, LOW);
+  digitalWrite(B_2H, LOW);
+
+  digitalWrite(A_sleep, HIGH);
+  digitalWrite(B_sleep, LOW);
+}
