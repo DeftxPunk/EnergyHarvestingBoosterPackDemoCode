@@ -1,0 +1,53 @@
+// Define the number of samples to keep track of.
+#define inputPin 14     // (P1.6 => 14) & (P1.7 => 15)
+#define captures 255     // 255 maxiumum
+
+byte cap[captures];     // the readings from the analog input
+byte index;             // the index of the current reading
+word total;             // the running total
+float voltage;          // the average
+
+void setup() {
+  pinMode(inputPin, OUTPUT);
+  pinMode(13, OUTPUT);
+  digitalWrite(inputPin, LOW);
+  digitalWrite(13, LOW);
+  pinMode(inputPin, INPUT);
+  analogReference(INTERNAL1V5);
+  Serial.begin(9600);
+  for (index = 0; index < captures; index++)
+    cap[index] = 0;
+  zeros();
+}
+
+void loop() {
+  total = total - cap[index];
+  Serial.print(total);
+  Serial.print("    ");
+  cap[index] = analogRead(inputPin) / 8;
+  total = total + cap[index];
+  Serial.print(total);
+  Serial.print("    ");
+  voltage = 0;
+  voltage = (total * 1.5 * 12) / (captures * 127);
+  Serial.println(voltage);
+
+  index++;
+  if (index == captures)
+    index = 0;
+
+  if(voltage > 4.2) {
+    delay(300000);
+    digitalWrite(13, HIGH);
+    delay(300000);
+    digitalWrite(13, LOW);
+    zeros();
+  }
+  delay(20);
+}
+
+void zeros() {
+  index = 0;
+  total = 0;
+  voltage = 0;
+}
